@@ -1,0 +1,67 @@
+clc;
+
+clear all;
+
+n=40 %Order
+
+fp=250 %Pass Frequency
+
+fs=700 %Stop Frequency
+
+f=1000
+
+wp=2*(fp/f) %Convert to Radian
+
+ws=2*(fs/f) %Convert to Radian
+
+window=boxcar(n+1) %Rectangular Window
+
+wn=2*(fp/f)
+
+b1=fir1(n,wn,window) %Low Pass
+
+b2=fir1(n,wn,’high’,window) %High Pass
+
+[H w]=freqz(b1,1)
+
+subplot(2,2,1)
+
+plot(w/pi,20*log(abs(H)))
+
+xlabel(‘nf’)
+
+ylabel(‘Magnitude in dB ‘)
+
+title(‘Magnitude Response Low Pass- ‘)
+
+subplot(2,2,2)
+
+plot(w/pi,angle(H))
+
+xlabel(‘nf’)
+
+ylabel(‘Angle’)
+
+title(‘Phase Response Low Pass — ‘)
+
+[H w]=freqz(b2,1)
+
+subplot(2,2,3)
+
+plot(w/pi,20*log(abs(H)))
+
+xlabel(‘nf’)
+
+ylabel(‘Magnitude in dB ‘)
+
+title(‘Magnitude Response High Pass- ‘)
+
+subplot(2,2,4)
+
+plot(w/pi,angle(H))
+
+xlabel(‘nf’)
+
+ylabel(‘Angle’)
+
+title(‘Phase Response High Pass — ‘)
